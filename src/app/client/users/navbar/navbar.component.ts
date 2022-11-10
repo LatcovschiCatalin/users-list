@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
+import {AuthService} from "../../auth/auth.service";
 
 @Component({
   selector: 'app-navbar',
@@ -48,7 +49,7 @@ export class NavbarComponent implements OnInit {
   ]
 
 
-  constructor(public cookieService: CookieService) {
+  constructor(public cookieService: CookieService, private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -69,6 +70,12 @@ export class NavbarComponent implements OnInit {
       document.documentElement.style.setProperty(this.variables[i], this.themes[e][this.variables[i]]);
     }
 
+  }
+
+  logOut() {
+    if (window.confirm('Are you sure you want to log out?')) {
+      return this.authService.logout();
+    }
   }
 
 }

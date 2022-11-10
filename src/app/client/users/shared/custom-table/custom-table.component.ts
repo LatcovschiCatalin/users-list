@@ -7,6 +7,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {CrudService} from "../../../../server/crud/crud.service";
 import {User} from "../../../../server/crud/user";
 import {phoneNumberRegex, validationMessages} from "../../../constants";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-custom-table',
@@ -109,11 +110,10 @@ export class CustomTableComponent implements OnInit, OnDestroy {
   });
 
 
-  constructor(private router: Router, private service: CrudService, private formBuilder: FormBuilder, private qpService: QueryParamsService, private route: ActivatedRoute, private cookieService: CookieService) {
+  constructor(private snackBar: MatSnackBar, private router: Router, private service: CrudService, private formBuilder: FormBuilder, private qpService: QueryParamsService, private route: ActivatedRoute, private cookieService: CookieService) {
   }
 
   ngOnInit(): void {
-    console.log(this.formData)
     this.mode = this.cookieService.get('mode') || 'dark';
     this.showSort(false);
     this.fieldWidth = (this.width - 126) / this.width * 100 / (this.displayedColumns.length - 1) / 100 * this.width;
@@ -192,6 +192,12 @@ export class CustomTableComponent implements OnInit, OnDestroy {
       this.tableConfig?.service.deleteById(id).subscribe(() => {
         this.getData();
       });
+      this.snackBar.open('User deleted successfully', '', {
+        horizontalPosition: 'end',
+        verticalPosition: 'top',
+        duration: 5000,
+        panelClass: 'success'
+      })
     }
   }
 
@@ -252,7 +258,7 @@ export class CustomTableComponent implements OnInit, OnDestroy {
         break;
       }
       case 'view': {
-        this.router.navigate(['/details/' + id]);
+        this.router.navigate(['users//details/' + id]);
         break;
       }
     }
@@ -270,17 +276,26 @@ export class CustomTableComponent implements OnInit, OnDestroy {
           this.getData();
           this.refreshForm();
           this.id = '-1';
+          this.snackBar.open('User updated successfully', '', {
+            horizontalPosition: 'end',
+            verticalPosition: 'top',
+            duration: 5000,
+            panelClass: 'success'
+          })
+
         });
-
       } else {
-        if (window.confirm('Are you ready to add this user?')) {
-          this.service.post(this.obj).subscribe(() => {
-            this.getData();
-            this.refreshForm();
-            this.add = false;
-          });
-        }
-
+        this.service.post(this.obj).subscribe(() => {
+          this.getData();
+          this.refreshForm();
+          this.add = false;
+        });
+        this.snackBar.open('User added successfully', '', {
+          horizontalPosition: 'end',
+          verticalPosition: 'top',
+          duration: 5000,
+          panelClass: 'success'
+        })
       }
       return true;
     }

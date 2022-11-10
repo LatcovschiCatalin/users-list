@@ -1,12 +1,28 @@
 {
   "posts": [
     {
+      "name": "Name",
+      "surname": "Surname",
+      "email": "test@email.com",
+      "phone": "+3736000000",
+      "password": "password",
+      "id": 1
+    },
+    {
+      "name": "Name2",
+      "surname": "Surname2",
+      "email": "test2@example.com",
+      "phone": "+37369875345",
+      "password": "password123",
+      "id": 2
+    },
+    {
       "name": "Latcovschi",
       "surname": "Catalin",
-      "email": "clatcovschi@gmail.com",
+      "email": "catalin.latcovschi@isa.utm.md",
       "phone": "+37360855428",
-      "password": "passwordeee",
-      "id": 1
+      "password": "testpassword",
+      "id": 3
     }
   ],
   "comments": [],
